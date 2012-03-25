@@ -1,31 +1,42 @@
-var Db = require('mongodb').Db;
-var Connection = require('mongodb').Connection;
-var Server = require('mongodb').Server;
+var Mongo = require('mongoskin');
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
-ArticleProvider = function(host, port) {
- this.db= new Db('node-mongo-blog', new Server(host, port, {auto_reconnect: true}, {}));
- this.db.open(function(){});
+ArticleProvider = function(mongoUrl) {
+    console.log(mongoUrl);
+
+    console.log("Opening connection mongodb to " + mongoUrl);
+    this.db = Mongo.db(mongoUrl);
+    this.db.collection('articles').find().toArray(
+	function(err, items) { 
+	    console.dir(items); 
+	});
 };
 
 
 ArticleProvider.prototype.getCollection= function(callback) {
-  this.db.collection('articles', function(error, article_collection) {
-    if( error ) callback(error);
-    else callback(null, article_collection);
-  });
+    console.log("in getCollection");
+//    this.db.collection('articles');//.find().toArray(
+//	function(error, article_collection) {
+//	    console.log("in getCollection callback");
+//	    if( error ) callback(error);
+//          else callback(null, article_collection);
+//	});
+    callback(null, this.db.collection('articles'));
+
 };
 
 ArticleProvider.prototype.findAll = function(callback) {
+    console.log("in findall");
     this.getCollection(function(error, article_collection) {
-      if( error ) callback(error)
-      else {
-        article_collection.find().toArray(function(error, results) {
-          if( error ) callback(error)
-          else callback(null, results)
-        });
-      }
+	console.log("in getCollectionCallback");
+	if( error ) callback(error)
+	else {
+            article_collection.find().toArray(function(error, results) {
+		if( error ) callback(error)
+		else callback(null, results)
+            });
+	}
     });
 };
 

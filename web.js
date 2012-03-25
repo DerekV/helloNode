@@ -25,7 +25,8 @@ app.configure('production', function(){
     app.use(express.errorHandler());
 });
 
-var articleProvider= new ArticleProvider('localhost',27017);
+var articleProvider= new ArticleProvider(process.env.MONGOLAB_URI 
+					 || 'localhost:27017/node-mongo-blog?auto_reconnect');
 
 app.get('/hello', function(request, response) {
     var text = 'Hello World!\n';
@@ -40,7 +41,9 @@ app.get('/egg', function(request, response) {
 });
 
 app.get('/', function(req, res){
+    console.log("Request received");
     articleProvider.findAll(function(error, docs){
+	console.log("in findall callback");
 	res.render('index.jade', { locals: {
             title: 'Blog',
             articles:docs
