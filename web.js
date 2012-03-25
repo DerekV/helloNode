@@ -49,6 +49,23 @@ app.get('/', function(req, res){
     })
 });
 
+
+app.get('/blog/new', function(req, res) {
+    res.render('blog_new.jade', { locals: {
+        title: 'New Post'
+    }
+    });
+});
+
+app.post('/blog/new', function(req, res){
+    articleProvider.save({
+        title: req.param('title'),
+        body: req.param('body')
+    }, function( error, docs) {
+        res.redirect('/')
+    });
+});
+
 app.listen(3000);
 
 var port = process.env.PORT || 3000;
