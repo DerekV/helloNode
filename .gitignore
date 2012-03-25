@@ -11,3 +11,5 @@ auto-save-list
 tramp
 .\#*
 
+#stylus , css files are generated
+*.css 
