@@ -5,7 +5,7 @@ var express = require('express');
 
 var app = module.exports = express.createServer(express.logger());
 
-var ArticleProvider = require('./articleprovider-memory').ArticleProvider;
+var ArticleProvider = require('./articleprovider-mongodb').ArticleProvider;
 
 app.configure(function(){
     app.set('views', __dirname + '/views');
@@ -25,7 +25,7 @@ app.configure('production', function(){
     app.use(express.errorHandler());
 });
 
-var articleProvider= new ArticleProvider();
+var articleProvider= new ArticleProvider('localhost',27017);
 
 app.get('/hello', function(request, response) {
     var text = 'Hello World!\n';
