@@ -74,6 +74,17 @@ app.post('/blog/new', function(request, response){
 	});
 });
 
+app.get('/blog/:id', function(req, res) {
+    articleProvider.findById(req.params.id, function(error, article) {
+        res.render('blog_show.jade',
+        { locals: {
+            title: article.title,
+            article:article
+        }
+        });
+    });
+});
+
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log("Listening on " + port);
