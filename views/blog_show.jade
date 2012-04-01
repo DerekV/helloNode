@@ -1,20 +1,22 @@
-h1= title
+
 div.article
     div.created_at= article.created_at
     div.title= article.title
     div.body= article.body
     - each comment in article.comments
       div.comment
+        div.remark= comment.comment
         div.person= comment.person
-        div.comment= comment.comment
-    div
-      form( method="post", action="/blog/addComment")
-        input( type="hidden", name="_id", value=article._id.toHexString())
-        div
-          span Author :
-          input( type="text", name="person", id="addCommentPerson")
-        div
-          span Comment :
-          textarea( name="comment", rows=5, id="addCommentComment")
-        div#editArticleSubmit
-          input(type="submit", value="Send")
+
+div.addComment
+  p mwuaaa!  Leave a comment!
+  form( method="post", action="/blog/addComment")
+    input( type="hidden", name="_id", value=article._id.toHexString())
+  div
+    span Who are you? 
+    input( type="text", name="person", id="addCommentPerson")
+  div
+    span What have you got to say? 
+    textarea( name="comment", rows=5, id="addCommentComment")
+  div#editArticleSubmit
+    input(type="submit", value="Post Comment")

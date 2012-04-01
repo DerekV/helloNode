@@ -12,4 +12,4 @@ tramp
 .\#*
 
 #stylus , css files are generated
-*.css 
+/public/stylesheets/*.css
