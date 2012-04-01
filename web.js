@@ -85,6 +85,17 @@ app.get('/blog/:id', function(req, res) {
     });
 });
 
+app.post('/blog/addComment', function(req, res) {
+    articleProvider.addCommentToArticle(req.param('_id'), {
+        person: req.param('person'),
+        comment: req.param('comment'),
+        created_at: new Date()
+       } , function( docs) {
+           res.redirect('/blog/' + req.param('_id'))
+       });
+});
+
+
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log("Listening on " + port);

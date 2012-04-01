@@ -4,8 +4,8 @@ var ObjectID = require('mongodb').ObjectID;
 
 ArticleProvider = function(mongoUrl) {
     console.log(mongoUrl);
-
     console.log("Opening connection mongodb to " + mongoUrl);
+
     this.db = Mongo.db(mongoUrl);
     this.article_collection = 
 	this.db.collection('articles');
@@ -48,6 +48,17 @@ ArticleProvider.prototype.save = function(articles, callback) {
     this.article_collection.insert(articles, function() {
         callback(null, articles);
     });
+};
+
+ArticleProvider.prototype.addCommentToArticle = function(articleId, comment, callback) {
+      this.article_collection.updateById(
+          articleId, 
+	  {"$push": {comments: comment}},
+	  function(error, article){
+	      console.log("in callabck for add comment");
+	      if(error) console.log(error);
+	      callback(article);
+	  });
 };
 
 exports.ArticleProvider = ArticleProvider;
