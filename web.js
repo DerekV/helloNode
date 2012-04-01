@@ -25,8 +25,9 @@ app.configure('production', function(){
     app.use(express.errorHandler());
 });
 
-var articleProvider= new ArticleProvider(process.env.MONGOLAB_URI 
-					 || 'localhost:27017/node-mongo-blog?auto_reconnect');
+var mongoUrl = (process.env.MONGOHQ_URL || 'localhost:27017/node-mongo-blog');
+
+var articleProvider= new ArticleProvider( mongoUrl + '?auto_reconnect');
 
 app.get('/hello', function(request, response) {
     var text = 'Hello World!\n';

@@ -2,11 +2,15 @@
   "name": "helloNode"
   , "version": "0.0.1"
   , "private": true
+  , "engines": {
+      "node": "0.6.13"
+    , "npm":  "1.1.9"
+  }
   , "dependencies": {
       "express": "2.5.8"
     , "stylus": ">= 0.0.1"
     , "jade": ">= 0.0.1"
-    , "mongodb": ">= 0.9.6-7"
+    , "mongodb": ">= 0.9.6-7" 
     , "mongoskin" : ">= 0.2.3"
   }
 }
