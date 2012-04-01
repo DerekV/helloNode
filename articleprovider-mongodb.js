@@ -13,7 +13,6 @@ ArticleProvider = function(mongoUrl) {
 
 
 ArticleProvider.prototype.findAll = function(callback) {
- 
     this.article_collection.find().toArray(function(error, results) {
 	if( error ) callback(error)
 	else callback(null, results)
@@ -22,12 +21,16 @@ ArticleProvider.prototype.findAll = function(callback) {
 
 
 ArticleProvider.prototype.findById = function(id, callback) {
-    this.article_collection.findOne({_id: article_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
-        if( error ) callback(error)
-        else callback(null, result)
-    });
+    this.article_collection.findById(
+	id
+	  ,
+	  function(error, result) {
+	      if( error ) callback(error)
+	      else callback(null, result)
+	  }
+	);
 };
- 
+    
 
 ArticleProvider.prototype.save = function(articles, callback) {
     if( typeof(articles.length)=="undefined")
